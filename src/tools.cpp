@@ -5,6 +5,8 @@
 using Eigen::VectorXd;
 using Eigen::MatrixXd;
 using std::vector;
+using std::cout;
+using std::endl;
 
 Tools::Tools() {}
 
@@ -19,43 +21,44 @@ VectorXd Tools::CalculateRMSE(const vector<VectorXd> &estimations,
 	VectorXd rmse(4);
 	rmse << 0,0,0,0;
 
-	  // TODO: YOUR CODE HERE
-	  // check the validity of the following inputs:
-	  //  * the estimation vector size should not be zero
-	  //  * the estimation vector size should equal ground truth vector size
-	  if (estimations.size() == 0 || estimations.size() != ground_truth.size()){
-	    cout << "Error: Estimations Size Wrong or Ground Truth Size Wrong" << endl;
-	  }
+	// check the validity of the following inputs:
+	//  * the estimation vector size should not be zero
+	//  * the estimation vector size should equal ground truth vector size
+	if (estimations.size() == 0 || estimations.size() != ground_truth.size()){
+	cout << "Error: Estimations Size Wrong or Ground Truth Size Wrong" << endl;
+	}
 
-	  // Accumulate squared residuals
-	  for (int i=0; i < estimations.size(); ++i) {
-	    VectorXd residual= estimations[i] - ground_truth[i];
-	    residual = residual.array().pow(2);
-	    rmse += residual;
-	  }
+	// Accumulate squared residuals
+	for (int i=0; i < estimations.size(); ++i) {
+	VectorXd residual= estimations[i] - ground_truth[i];
+	residual = residual.array().pow(2);
+	rmse += residual;
+	}
 
-	  // Calculate the mean
-	  rmse = rmse / estimations.size();
+	// Calculate the mean
+	rmse = rmse / estimations.size();
 
-	  // Calculate the squared root
-	  rmse = rmse.array().sqrt();
+	// Calculate the squared root
+	rmse = rmse.array().sqrt();
 
 
-	  // return the result
-	  return rmse;
+	// return the result
+	return rmse;
 
 
 }
 
 MatrixXd Tools::CalculateJacobian(const VectorXd& x_state) {
 	MatrixXd Hj(3,4);
+	Hj << 0, 0, 0, 0,
+	      0, 0, 0, 0,
+	      0, 0, 0, 0;
+
 	// recover state parameters
 	float px = x_state(0);
 	float py = x_state(1);
 	float vx = x_state(2);
 	float vy = x_state(3);
-
-	// TODO: YOUR CODE HERE
 
 	// check division by zero
 	if (fabs(px*px + py+py) < 0.0001) {
