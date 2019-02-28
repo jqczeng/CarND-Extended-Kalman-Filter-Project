@@ -33,8 +33,8 @@ FusionEKF::FusionEKF() {
               0, 0, 0.09;
 
   /**
-   * TODO: Finish initializing the FusionEKF.
-   * TODO: Set the process and measurement noises
+   * Finish initializing the FusionEKF.
+   *  Set the process and measurement noises
    */
   ekf_.P_ = MatrixXd(4, 4);
   ekf_.P_ << 1, 0, 0, 0,
@@ -77,8 +77,7 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
     ekf_.x_ << 1, 1, 1, 1;
 
     if (measurement_pack.sensor_type_ == MeasurementPackage::RADAR) {
-		// TODO: Convert radar from polar to cartesian coordinates
-		//         and initialize state.
+		//  Convert radar from polar to cartesian coordinates and initialize state.
     	// set the state with the initial location and zero velocity
     	float r = measurement_pack.raw_measurements_[0];
     	float theta = measurement_pack.raw_measurements_[1];

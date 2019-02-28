@@ -3,8 +3,6 @@
 
 using Eigen::MatrixXd;
 using Eigen::VectorXd;
-using std::cout;
-using std::endl;
 
 /*
  * Please note that the Eigen library does not initialize
@@ -70,6 +68,7 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
 
 	VectorXd y = z - h;
 
+	// transform the phi angle to between -pi and pi
 	while ( y(1) > M_PI || y(1) < -M_PI ) {
 		if ( y(1) > M_PI ) {
 		  y(1) -= M_PI;
@@ -90,5 +89,4 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
     long x_size = x_.size();
     MatrixXd I = MatrixXd::Identity(x_size, x_size);
     P_ = (I - K * H_) * P_;
-
 }
